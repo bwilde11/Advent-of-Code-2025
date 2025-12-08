@@ -18,17 +18,11 @@ const findInvalidIDs = (input) => {
         //Loop through each ID in the range
         for (let id = rangeStart; id <= rangeEnd; id++) {
             idStr = id.toString();
-            //Check if string is an even number of characters
-            if (idStr.length % 2 === 0) {
-            //If yes, split in half and compare first half to second half
-                let halfLength = idStr.length / 2;
-                let firstHalf = idStr.slice(0, halfLength);
-                let secondHalf = idStr.slice(halfLength);
-            //If first half matches second half, add the value to array of invalid IDs
-                if (firstHalf === secondHalf) {
-                    invalidIDs.push(id);
-                    invalidSum += id;
-                };
+            //Check if the ID consists only of any sequeunce of digits repeated at least twice
+            const regex = /^(\d+)\1+$/;
+            if (regex.test(idStr)) {
+                invalidIDs.push(id);
+                invalidSum += id;
             };
         };
     };
