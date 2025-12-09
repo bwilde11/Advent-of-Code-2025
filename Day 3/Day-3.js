@@ -1,5 +1,5 @@
 //Define input file path and initial variables
-const inputFile = 'test.txt';
+const inputFile = 'input.txt';
 const fs = require('fs');
 
 let joltageRatings = [];
@@ -14,14 +14,22 @@ const findHighestJoltage = (input) => {
         //Within the bank, determine which batteries to turn on
         let firstBattery = 0;
         let secondBattery = 0;
-        for (let j = 0; j < banks[i].length - 1; j++) {
-            if (banks[i][j] > firstBattery) {
-                firstBattery = banks[i][j];
-                for (j++; j < banks[i].length; j++) {
-                    if (banks[i][j] > secondBattery) {
-                        secondBattery = banks[i][j];
-                    };
-                };
+        let firstBatteryIndex;
+        //Convert bank string into array of battery power levels
+        const batteries = banks[i].split("").map(Number);
+        //Identify the battery with the highest power level from the first battery to the second to last battery
+        //This is the firstBattery
+        for (let j = 0; j < batteries.length - 1; j++) {
+            if (batteries[j] > firstBattery) {
+                firstBattery = batteries[j];
+                firstBatteryIndex = j;
+            };
+        };
+        //Identify the battery with the highest power level from the battery after the firstBattery to the last battery
+        //This is the secondBattery
+        for (let j = firstBatteryIndex + 1; j < batteries.length; j++) {
+            if (batteries[j] > secondBattery) {
+                secondBattery = batteries[j];
             };
         };
 
@@ -33,8 +41,6 @@ const findHighestJoltage = (input) => {
         //Add to total joltage
         totalJoltage += bankJoltage;
     };
-
-    console.log(`Joltage Ratings from each bank: ${joltageRatings}`);
 
     return totalJoltage;
 };
