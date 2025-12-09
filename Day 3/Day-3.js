@@ -11,12 +11,17 @@ const findHighestJoltage = (input) => {
     const banks = input.split("\n");
     //Loop through each bank
     for (let i = 0; i < banks.length; i++) {
-        //Within the bank, determine which batteries to turn on
-        let firstBattery = 0;
-        let secondBattery = 0;
-        let firstBatteryIndex;
         //Convert bank string into array of battery power levels
-        const batteries = banks[i].split("").map(Number);
+        let batteries = banks[i].split("").map(Number);
+        //Set number of batteries to turn on
+        const numOfBatteries = 12;
+
+        //first pass: loop through (batteries.length - n - 1) to find highest value
+        //each subsequent pass: start loop from index of last highest value + 1 to batteries.length - n
+        //repeat until n highest values have been found
+        
+
+        /*
         //Identify the battery with the highest power level from the first battery to the second to last battery
         //This is the firstBattery
         for (let j = 0; j < batteries.length - 1; j++) {
@@ -40,6 +45,7 @@ const findHighestJoltage = (input) => {
         joltageRatings.push(bankJoltage);
         //Add to total joltage
         totalJoltage += bankJoltage;
+        */
     };
 
     return totalJoltage;
@@ -51,5 +57,6 @@ fs.readFile(inputFile, 'utf8', (err, data) => {
         console.error(err);
         return;
     }
+
     console.log(`Highest Joltage: ${findHighestJoltage(data)}`);
 });
