@@ -6,6 +6,7 @@ const maxValue = 99;
 
 //Read instructions from input
 const instructionsFile = 'input.txt';
+const fs = require('fs');
 
 //Setup counter function
 const zeroCounter = (instructions) => {
@@ -60,7 +61,6 @@ const zeroCounter = (instructions) => {
 };
 
 //Read in the file and execute the counter function
-const fs = require('fs');
 fs.readFile(instructionsFile, 'utf8', (err, data) => {
     if (err) {
         console.error(err);

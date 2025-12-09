@@ -1,5 +1,6 @@
 //Define input file path
 const inputFile = 'input.txt';
+const fs = require('fs');
 
 //Create function to loop through the IDs in the input file and sum the invalid ones
 const findInvalidIDs = (input) => {
@@ -38,7 +39,6 @@ const findInvalidIDs = (input) => {
 };
 
 //Read in the file and execute the findInvalidIDs function
-const fs = require('fs');
 fs.readFile(inputFile, 'utf8', (err, data) => {
     if (err) {
         console.error(err);
