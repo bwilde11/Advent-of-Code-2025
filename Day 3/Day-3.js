@@ -1,5 +1,5 @@
 //Define input file path and initial variables
-const inputFile = 'input.txt';
+const inputFile = 'test.txt';
 const fs = require('fs');
 
 let joltageRatings = [];
@@ -16,37 +16,34 @@ const findHighestJoltage = (input) => {
         //Set number of batteries to turn on
         const numOfBatteries = 12;
 
-        //first pass: loop through (batteries.length - n - 1) to find highest value
-        //each subsequent pass: start loop from index of last highest value + 1 to batteries.length - n
-        //repeat until n highest values have been found
+        //Initialize variables for looping
+        let startingIndex = 0;
+        let endingIndex = batteries.length - numOfBatteries + 1;
+        let highestValues = [];
+
+        while (endingIndex < batteries.length + 1) {
+            let highestValue = 0;
+            let highestValueIndex = 0;
+
+            for (let j = startingIndex; j < endingIndex; j++) {
+                if (batteries[j] > highestValue) {
+                    highestValue = batteries[j];
+                    highestValueIndex = j;
+                };
+            };
+
+            highestValues.push(highestValue);
+            startingIndex = highestValueIndex + 1;
+            endingIndex++;
+        };        
+
+        //Take individual numbers from highestValues array and concatenate them into a single number
+        joltageRatings.push(parseInt(highestValues.join("")));
+        totalJoltage += joltageRatings[i];
         
-
-        /*
-        //Identify the battery with the highest power level from the first battery to the second to last battery
-        //This is the firstBattery
-        for (let j = 0; j < batteries.length - 1; j++) {
-            if (batteries[j] > firstBattery) {
-                firstBattery = batteries[j];
-                firstBatteryIndex = j;
-            };
-        };
-        //Identify the battery with the highest power level from the battery after the firstBattery to the last battery
-        //This is the secondBattery
-        for (let j = firstBatteryIndex + 1; j < batteries.length; j++) {
-            if (batteries[j] > secondBattery) {
-                secondBattery = batteries[j];
-            };
-        };
-
-        //Combine digits from two highest batteries to form joltage rating
-        const bankJoltage = firstBattery * 10 + secondBattery;
-
-        //Add the highest joltage from this bank to the array
-        joltageRatings.push(bankJoltage);
-        //Add to total joltage
-        totalJoltage += bankJoltage;
-        */
     };
+
+    console.log(`Joltage Ratings: ${joltageRatings}`);
 
     return totalJoltage;
 };
